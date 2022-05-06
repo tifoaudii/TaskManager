@@ -16,6 +16,8 @@
 		83860C6828256BBC00B1090D /* TaskManagerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83860C6728256BBC00B1090D /* TaskManagerUITestsLaunchTests.swift */; };
 		83860C7628256C7000B1090D /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83860C7428256C7000B1090D /* TaskViewController.swift */; };
 		83860C7728256C7000B1090D /* TaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83860C7528256C7000B1090D /* TaskViewController.xib */; };
+		83860C7A28257AA400B1090D /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83860C7828257AA400B1090D /* TaskCell.swift */; };
+		83860C7B28257AA400B1090D /* TaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83860C7928257AA400B1090D /* TaskCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		83860C6728256BBC00B1090D /* TaskManagerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		83860C7428256C7000B1090D /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		83860C7528256C7000B1090D /* TaskViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskViewController.xib; sourceTree = "<group>"; };
+		83860C7828257AA400B1090D /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
+		83860C7928257AA400B1090D /* TaskCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				83860C5228256BBC00B1090D /* Info.plist */,
 				83860C7428256C7000B1090D /* TaskViewController.swift */,
 				83860C7528256C7000B1090D /* TaskViewController.xib */,
+				83860C7828257AA400B1090D /* TaskCell.swift */,
+				83860C7928257AA400B1090D /* TaskCell.xib */,
 			);
 			path = TaskManager;
 			sourceTree = "<group>";
@@ -231,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83860C7B28257AA400B1090D /* TaskCell.xib in Resources */,
 				83860C7728256C7000B1090D /* TaskViewController.xib in Resources */,
 				83860C5128256BBC00B1090D /* LaunchScreen.storyboard in Resources */,
 				83860C4E28256BBC00B1090D /* Assets.xcassets in Resources */,
@@ -258,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83860C7A28257AA400B1090D /* TaskCell.swift in Sources */,
 				83860C4528256BBA00B1090D /* AppDelegate.swift in Sources */,
 				83860C4728256BBA00B1090D /* SceneDelegate.swift in Sources */,
 				83860C7628256C7000B1090D /* TaskViewController.swift in Sources */,

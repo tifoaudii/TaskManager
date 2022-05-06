@@ -14,6 +14,9 @@
                 <outlet property="failedButton" destination="DqZ-In-iL6" id="o1n-mI-4l5"/>
                 <outlet property="filterIndicatorLeadingConstraint" destination="Bb3-wZ-9vu" id="CkI-FV-6w4"/>
                 <outlet property="filterStackView" destination="DOs-uz-L9N" id="y96-32-aVt"/>
+                <outlet property="tableView" destination="6wt-aJ-fXj" id="tKp-qC-CKz"/>
+                <outlet property="titleStackView" destination="s76-sU-Uqa" id="hhE-9A-lfx"/>
+                <outlet property="titleTopConstraint" destination="f4s-18-RT0" id="l6V-Qu-5h1"/>
                 <outlet property="todayButton" destination="cvc-Ja-nZJ" id="vam-mr-BaK"/>
                 <outlet property="upcomingButton" destination="Fx1-cv-ACj" id="Ypm-ux-T8K"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -116,7 +119,7 @@
                         <constraint firstAttribute="trailing" secondItem="DOs-uz-L9N" secondAttribute="trailing" id="jR3-yi-Gtl"/>
                     </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6wt-aJ-fXj">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6wt-aJ-fXj">
                     <rect key="frame" x="0.0" y="213" width="414" height="649"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
