@@ -7,13 +7,9 @@
 
 import UIKit
 
-class AddTaskViewController: UIViewController {
+final class AddTaskViewController: UIViewController {
 
-    @IBOutlet weak var greenColorButton: UIButton!
-    @IBOutlet weak var blueColorButton: UIButton!
-    @IBOutlet weak var tealColorButton: UIButton!
-    @IBOutlet weak var pinkColorButton: UIButton!
-    @IBOutlet weak var grayColorButton: UIButton!
+    @IBOutlet weak var colorStackView: TaskColorStackView!
     @IBOutlet weak var deadlineTaskField: UITextField!
     @IBOutlet weak var titleTaskField: UITextField!
     @IBOutlet weak var basicButton: UIButton!
@@ -22,9 +18,6 @@ class AddTaskViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        greenColorButton.layer.borderColor = UIColor.black.cgColor
-        greenColorButton.layer.borderWidth = 1.0
-        greenColorButton.layer.cornerRadius = greenColorButton.frame.height / 2
         
         urgentButton.layer.borderWidth = 1.0
         urgentButton.layer.borderColor = UIColor.black.cgColor
@@ -35,5 +28,6 @@ class AddTaskViewController: UIViewController {
     
     
     @IBAction func onTapSaveButton(_ sender: Any) {
+        
     }
 }
