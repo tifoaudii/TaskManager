@@ -20,7 +20,6 @@ class TaskViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var titleStackView: UIStackView!
     
     private var lastContentOffset: CGFloat = 0.0
-    private var maxYContentOffset: CGFloat = 80.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +40,7 @@ class TaskViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffset: CGFloat = scrollView.contentOffset.y
-        let percentage: CGFloat = contentOffset / 10
+        let percentage: CGFloat = contentOffset / 90
         titleStackView.alpha = 1 - percentage
         
         if lastContentOffset > contentOffset {
@@ -83,6 +82,10 @@ class TaskViewController: UIViewController, UITableViewDelegate, UITableViewData
         failedButton.setTitleColor(.white, for: .normal)
         setInActive(for: upcomingButton, doneButton, todayButton)
         moveFilterIndicatorView(to: 3)
+    }
+    
+    @IBAction func onTapAddTaskButton(_ sender: Any) {
+        present(AddTaskViewController(), animated: true, completion: nil)
     }
     
     private func setInActive(for buttons: UIButton...) {
