@@ -7,31 +7,6 @@
 
 import UIKit
 
-protocol AddTaskViewPresenter {
-    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: String)
-}
-
-final class AddTaskViewDefaultPresenter: AddTaskViewPresenter {
-    
-    private let coreDataStack: CoreDataStack
-    
-    var didAddNewTask: (() -> Void)?
-    
-    init(coreDataStack: CoreDataStack) {
-        self.coreDataStack = coreDataStack
-    }
-    
-    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: String) {
-        let newTask = Task(context: coreDataStack.viewContext)
-        newTask.color = color.color
-        newTask.deadline = deadline
-        newTask.title = title
-        newTask.type = type.rawValue
-        coreDataStack.save()
-        didAddNewTask?()
-    }
-}
-
 final class AddTaskViewController: UIViewController {
 
     @IBOutlet weak var colorStackView: TaskColorStackView!

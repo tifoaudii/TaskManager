@@ -20,6 +20,8 @@
 		8346F58C28290F2A009BC983 /* UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346F58B28290F2A009BC983 /* UIFactory.swift */; };
 		8346F58E28290F48009BC983 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346F58D28290F48009BC983 /* Router.swift */; };
 		8346F59028290F68009BC983 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346F58F28290F68009BC983 /* AppFlow.swift */; };
+		8346F59C28291E2D009BC983 /* AddTaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346F59B28291E2D009BC983 /* AddTaskViewPresenter.swift */; };
+		8346F59E28291E4E009BC983 /* TaskViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346F59D28291E4E009BC983 /* TaskViewPresenter.swift */; };
 		83860C4528256BBA00B1090D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83860C4428256BBA00B1090D /* AppDelegate.swift */; };
 		83860C4728256BBA00B1090D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83860C4628256BBA00B1090D /* SceneDelegate.swift */; };
 		83860C4E28256BBC00B1090D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83860C4D28256BBC00B1090D /* Assets.xcassets */; };
@@ -64,6 +66,8 @@
 		8346F58B28290F2A009BC983 /* UIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFactory.swift; sourceTree = "<group>"; };
 		8346F58D28290F48009BC983 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		8346F58F28290F68009BC983 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
+		8346F59B28291E2D009BC983 /* AddTaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewPresenter.swift; sourceTree = "<group>"; };
+		8346F59D28291E4E009BC983 /* TaskViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewPresenter.swift; sourceTree = "<group>"; };
 		83860C4128256BBA00B1090D /* TaskManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83860C4428256BBA00B1090D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83860C4628256BBA00B1090D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +110,100 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8346F59128291D5C009BC983 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				8346F5822828FF2C009BC983 /* Task.xcdatamodeld */,
+				8346F58928290435009BC983 /* ColorAttributeTransformer.swift */,
+				8346F5802828FD0E009BC983 /* CoreDataStack.swift */,
+				8346F58528290039009BC983 /* Task+CoreDataClass.swift */,
+				8346F58628290039009BC983 /* Task+CoreDataProperties.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		8346F59228291D6D009BC983 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				8306B5122826BDCF00E143F9 /* TaskColorStackView.swift */,
+				8346F57E2828F594009BC983 /* TaskTypeStackView.swift */,
+				8306B5142826C68500E143F9 /* TaskColorType.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
+		8346F59328291D89009BC983 /* AppFlow */ = {
+			isa = PBXGroup;
+			children = (
+				8346F58B28290F2A009BC983 /* UIFactory.swift */,
+				8346F58D28290F48009BC983 /* Router.swift */,
+				8346F58F28290F68009BC983 /* AppFlow.swift */,
+			);
+			path = AppFlow;
+			sourceTree = "<group>";
+		};
+		8346F59428291DB8009BC983 /* TaskList */ = {
+			isa = PBXGroup;
+			children = (
+				8346F59A28291E0A009BC983 /* Presenter */,
+				8346F59928291DFC009BC983 /* ViewController */,
+				8346F59828291DF6009BC983 /* Cell */,
+			);
+			path = TaskList;
+			sourceTree = "<group>";
+		};
+		8346F59528291DCA009BC983 /* AddTask */ = {
+			isa = PBXGroup;
+			children = (
+				8346F59728291DEB009BC983 /* Presenter */,
+				8346F59628291DE3009BC983 /* ViewController */,
+			);
+			path = AddTask;
+			sourceTree = "<group>";
+		};
+		8346F59628291DE3009BC983 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8306B50E28263B3000E143F9 /* AddTaskViewController.swift */,
+				8306B50F28263B3000E143F9 /* AddTaskViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8346F59728291DEB009BC983 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				8346F59B28291E2D009BC983 /* AddTaskViewPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		8346F59828291DF6009BC983 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				83860C7828257AA400B1090D /* TaskCell.swift */,
+				83860C7928257AA400B1090D /* TaskCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		8346F59928291DFC009BC983 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				83860C7428256C7000B1090D /* TaskViewController.swift */,
+				83860C7528256C7000B1090D /* TaskViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8346F59A28291E0A009BC983 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				8346F59D28291E4E009BC983 /* TaskViewPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		83860C3828256BBA00B1090D = {
 			isa = PBXGroup;
 			children = (
@@ -129,28 +227,16 @@
 		83860C4328256BBA00B1090D /* TaskManager */ = {
 			isa = PBXGroup;
 			children = (
-				8346F58528290039009BC983 /* Task+CoreDataClass.swift */,
-				8346F58628290039009BC983 /* Task+CoreDataProperties.swift */,
+				8346F59528291DCA009BC983 /* AddTask */,
+				8346F59428291DB8009BC983 /* TaskList */,
+				8346F59328291D89009BC983 /* AppFlow */,
+				8346F59228291D6D009BC983 /* CustomView */,
+				8346F59128291D5C009BC983 /* CoreData */,
 				83860C4428256BBA00B1090D /* AppDelegate.swift */,
 				83860C4628256BBA00B1090D /* SceneDelegate.swift */,
 				83860C4D28256BBC00B1090D /* Assets.xcassets */,
 				83860C4F28256BBC00B1090D /* LaunchScreen.storyboard */,
 				83860C5228256BBC00B1090D /* Info.plist */,
-				83860C7428256C7000B1090D /* TaskViewController.swift */,
-				83860C7528256C7000B1090D /* TaskViewController.xib */,
-				83860C7828257AA400B1090D /* TaskCell.swift */,
-				83860C7928257AA400B1090D /* TaskCell.xib */,
-				8306B50E28263B3000E143F9 /* AddTaskViewController.swift */,
-				8306B50F28263B3000E143F9 /* AddTaskViewController.xib */,
-				8306B5122826BDCF00E143F9 /* TaskColorStackView.swift */,
-				8306B5142826C68500E143F9 /* TaskColorType.swift */,
-				8346F57E2828F594009BC983 /* TaskTypeStackView.swift */,
-				8346F5802828FD0E009BC983 /* CoreDataStack.swift */,
-				8346F5822828FF2C009BC983 /* Task.xcdatamodeld */,
-				8346F58928290435009BC983 /* ColorAttributeTransformer.swift */,
-				8346F58B28290F2A009BC983 /* UIFactory.swift */,
-				8346F58D28290F48009BC983 /* Router.swift */,
-				8346F58F28290F68009BC983 /* AppFlow.swift */,
 			);
 			path = TaskManager;
 			sourceTree = "<group>";
@@ -305,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8346F59E28291E4E009BC983 /* TaskViewPresenter.swift in Sources */,
 				8346F57F2828F594009BC983 /* TaskTypeStackView.swift in Sources */,
 				8346F59028290F68009BC983 /* AppFlow.swift in Sources */,
 				8306B5132826BDCF00E143F9 /* TaskColorStackView.swift in Sources */,
@@ -316,6 +403,7 @@
 				8346F58E28290F48009BC983 /* Router.swift in Sources */,
 				83860C7628256C7000B1090D /* TaskViewController.swift in Sources */,
 				8306B5152826C68500E143F9 /* TaskColorType.swift in Sources */,
+				8346F59C28291E2D009BC983 /* AddTaskViewPresenter.swift in Sources */,
 				8346F58A28290435009BC983 /* ColorAttributeTransformer.swift in Sources */,
 				8346F58728290039009BC983 /* Task+CoreDataClass.swift in Sources */,
 				8346F5842828FF2C009BC983 /* Task.xcdatamodeld in Sources */,
