@@ -7,27 +7,91 @@
 
 import UIKit
 
+protocol AddTaskViewPresenter {
+    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: String)
+}
+
+final class AddTaskViewDefaultPresenter: AddTaskViewPresenter {
+    
+    private let coreDataStack: CoreDataStack
+    
+    var didAddNewTask: (() -> Void)?
+    
+    init(coreDataStack: CoreDataStack) {
+        self.coreDataStack = coreDataStack
+    }
+    
+    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: String) {
+        let newTask = Task(context: coreDataStack.viewContext)
+        newTask.color = color.color
+        newTask.deadline = deadline
+        newTask.title = title
+        newTask.type = type.rawValue
+        coreDataStack.save()
+        didAddNewTask?()
+    }
+}
+
 final class AddTaskViewController: UIViewController {
 
     @IBOutlet weak var colorStackView: TaskColorStackView!
     @IBOutlet weak var deadlineTaskField: UITextField!
     @IBOutlet weak var titleTaskField: UITextField!
-    @IBOutlet weak var basicButton: UIButton!
-    @IBOutlet weak var urgentButton: UIButton!
-    @IBOutlet weak var importantButton: UIButton!
+    @IBOutlet weak var taskTypeStackView: TaskTypeStackView!
+    
+    private lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.minimumDate = Date()
+        datePicker.preferredDatePickerStyle = .inline
+        datePicker.addTarget(self, action: #selector(didSelectDate(_:)), for: .valueChanged)
+        return datePicker
+    }()
+    
+    private let presenter: AddTaskViewPresenter
+    
+    init(presenter: AddTaskViewPresenter) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        deadlineTaskField.inputView = datePicker
         
-        urgentButton.layer.borderWidth = 1.0
-        urgentButton.layer.borderColor = UIColor.black.cgColor
-        
-        importantButton.layer.borderWidth = 1.0
-        importantButton.layer.borderColor = UIColor.black.cgColor
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapAction))
+        view.addGestureRecognizer(tapGesture)
     }
     
+    @objc private func onTapAction() {
+        view.endEditing(true)
+    }
+    
+    @objc private func didSelectDate(_ sender: UIDatePicker) {
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyy, HH:mm"
+        
+        let selectedDate: String = dateFormatter.string(from: sender.date)
+        deadlineTaskField.text = selectedDate
+    }
     
     @IBAction func onTapSaveButton(_ sender: Any) {
+        guard let deadline = deadlineTaskField.text, !deadline.isEmpty else {
+            return
+        }
         
+        guard let title = titleTaskField.text, !title.isEmpty else {
+            return
+        }
+        
+        presenter.addNewTask(
+            title: title,
+            type: taskTypeStackView.selectedTaskType,
+            color: colorStackView.selectedColor,
+            deadline: deadline
+        )
     }
 }

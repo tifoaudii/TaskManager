@@ -15,8 +15,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = UINavigationController(rootViewController: TaskViewController())
+        ColorAttributeTransformer.register()
+        
+        let navigationController: UINavigationController = UINavigationController()
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
+        let factory = ViewControllerFactory(coreDataStack: CoreDataStack(inMemory: false))
+        let router = AppRouter(navigationController: navigationController, factory: factory)
+        let flow = AppFlow(router: router)
+        flow.start()
     }
 }
-

@@ -7,7 +7,30 @@
 
 import UIKit
 
-class TaskViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+protocol TaskViewPresenter {
+    func fetchPresentableTask(completion: @escaping ([Task]) -> Void)
+}
+
+final class TaskViewDefaultPresenter: TaskViewPresenter {
+    
+    private let coreDataStack: CoreDataStack
+    
+    init(coreDataStack: CoreDataStack) {
+        self.coreDataStack = coreDataStack
+    }
+    
+    func fetchPresentableTask(completion: @escaping ([Task]) -> Void) {
+        let request = Task.fetchRequest()
+        let tasks = try! coreDataStack.viewContext.fetch(request)
+        completion(tasks)
+    }
+}
+
+protocol TaskViewControllerNavigationDelegate {
+    func displayAddTaskView(from viewController: UIViewController, didAddNewTask: @escaping (() -> Void))
+}
+
+final class TaskViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var filterStackView: UIStackView!
     @IBOutlet weak var filterIndicatorLeadingConstraint: NSLayoutConstraint!
@@ -21,6 +44,21 @@ class TaskViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private var lastContentOffset: CGFloat = 0.0
     
+    private let navigationDelegate: TaskViewControllerNavigationDelegate
+    private let presenter: TaskViewPresenter
+    
+    private var tasks: [Task] = []
+    
+    init(presenter: TaskViewPresenter, navigationDelegate: TaskViewControllerNavigationDelegate) {
+        self.presenter = presenter
+        self.navigationDelegate = navigationDelegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,10 +66,18 @@ class TaskViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "TaskCell", bundle: .main), forCellReuseIdentifier: TaskCell.identifier)
+        fetchTasks()
+    }
+    
+    private func fetchTasks() {
+        presenter.fetchPresentableTask { tasks in
+            self.tasks = tasks
+            self.tableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        20
+        tasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -40,7 +86,7 @@ class TaskViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffset: CGFloat = scrollView.contentOffset.y
-        let percentage: CGFloat = contentOffset / 90
+        let percentage: CGFloat = contentOffset / 5
         titleStackView.alpha = 1 - percentage
         
         if lastContentOffset > contentOffset {
@@ -85,7 +131,9 @@ class TaskViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func onTapAddTaskButton(_ sender: Any) {
-        present(AddTaskViewController(), animated: true, completion: nil)
+        navigationDelegate.displayAddTaskView(from: self) { [weak self] in
+            self?.fetchTasks()
+        }
     }
     
     private func setInActive(for buttons: UIButton...) {
