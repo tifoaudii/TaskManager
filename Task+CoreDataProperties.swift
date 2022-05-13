@@ -18,8 +18,9 @@ extension Task {
 
     @NSManaged public var title: String?
     @NSManaged public var type: String?
-    @NSManaged public var deadline: String?
+    @NSManaged public var deadline: Date?
     @NSManaged public var color: NSObject?
+    @NSManaged public var isCompleted: Bool
 
 }
 

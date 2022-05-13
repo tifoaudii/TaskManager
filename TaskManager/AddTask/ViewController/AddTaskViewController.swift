@@ -66,7 +66,7 @@ final class AddTaskViewController: UIViewController {
             title: title,
             type: taskTypeStackView.selectedTaskType,
             color: colorStackView.selectedColor,
-            deadline: deadline
+            deadline: datePicker.date
         )
     }
 }

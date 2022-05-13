@@ -8,7 +8,7 @@
 import Foundation
 
 protocol TaskViewPresenter {
-    func fetchPresentableTask(completion: @escaping ([Task]) -> Void)
+    func fetchTodayTask(completion: @escaping ([PresentableTask]) -> Void)
 }
 
 final class TaskViewDefaultPresenter: TaskViewPresenter {
@@ -19,9 +19,9 @@ final class TaskViewDefaultPresenter: TaskViewPresenter {
         self.coreDataStack = coreDataStack
     }
     
-    func fetchPresentableTask(completion: @escaping ([Task]) -> Void) {
+    func fetchTodayTask(completion: @escaping ([PresentableTask]) -> Void) {
         let request = Task.fetchRequest()
         let tasks = try! coreDataStack.viewContext.fetch(request)
-        completion(tasks)
+        completion(tasks.map { PresentableTask(task: $0) })
     }
 }

@@ -24,11 +24,12 @@ final class TaskViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var titleStackView: UIStackView!
     
     private var lastContentOffset: CGFloat = 0.0
+    private var isHeaderHidden = false
     
     private let navigationDelegate: TaskViewControllerNavigationDelegate
     private let presenter: TaskViewPresenter
     
-    private var tasks: [Task] = []
+    private var tasks: [PresentableTask] = []
     
     init(presenter: TaskViewPresenter, navigationDelegate: TaskViewControllerNavigationDelegate) {
         self.presenter = presenter
@@ -51,9 +52,9 @@ final class TaskViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     private func fetchTasks() {
-        presenter.fetchPresentableTask { tasks in
-            self.tasks = tasks
-            self.tableView.reloadData()
+        presenter.fetchTodayTask { [weak self] tasks in
+            self?.tasks = tasks
+            self?.tableView.reloadData()
         }
     }
     
@@ -62,27 +63,36 @@ final class TaskViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: TaskCell.identifier, for: indexPath) as! TaskCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TaskCell.identifier, for: indexPath) as? TaskCell else {
+            return UITableViewCell()
+        }
+        
+        let task = tasks[indexPath.row]
+        cell.configureData(task: task)
+        return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffset: CGFloat = scrollView.contentOffset.y
-        let percentage: CGFloat = contentOffset / 5
-        titleStackView.alpha = 1 - percentage
+        let contentOffset = scrollView.contentOffset.y - lastContentOffset
         
-        if lastContentOffset > contentOffset {
-            if titleTopConstraint.constant < 0 && contentOffset < 50 {
-                titleTopConstraint.constant += 10
-                titleStackView.layoutIfNeeded()
-            }
-            
-        } else {
-            if titleTopConstraint.constant > -90 && contentOffset > 0 {
-                titleTopConstraint.constant -= 10
-                titleStackView.layoutIfNeeded()
+        
+        if contentOffset > 0 && scrollView.contentOffset.y > 0 {
+            if titleTopConstraint.constant > -80 {
+                titleTopConstraint.constant -=  contentOffset
             }
         }
         
+        if contentOffset < 0 && scrollView.contentOffset.y < 0 {
+            if titleTopConstraint.constant < 0 {
+                if titleTopConstraint.constant - contentOffset > 0 {
+                    titleTopConstraint.constant = 0
+                } else {
+                    titleTopConstraint.constant -= contentOffset
+                }
+            }
+        }
+        
+        titleStackView.alpha = 1 - (titleTopConstraint.constant / -80)
         lastContentOffset = scrollView.contentOffset.y
     }
     
