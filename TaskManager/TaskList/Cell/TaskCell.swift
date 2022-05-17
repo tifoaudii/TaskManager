@@ -14,8 +14,11 @@ final class TaskCell: UITableViewCell {
     @IBOutlet weak var taskTitleLabel: UILabel!
     @IBOutlet weak var taskDeadlineDateLabel: UILabel!
     @IBOutlet weak var taskDeadlineTimeLabel: UILabel!
+    @IBOutlet weak var finishButton: UIButton!
     
     static let identifier = "TaskCellIdentifier"
+    
+    var didTapTaskButton: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,11 +28,17 @@ final class TaskCell: UITableViewCell {
         taskTypeLabel.layer.borderColor = UIColor.black.cgColor
     }
 
-    func configureData(task: PresentableTask) {
+    func configureData(task: PresentableTask, for contentType: TaskContentType) {
         cardView.backgroundColor = task.taskColor
         taskTitleLabel.text = task.taskTitle
         taskDeadlineDateLabel.text = task.taskDeadlineDate
         taskDeadlineTimeLabel.text = task.taskDeadlineTime
         taskTypeLabel.text = task.taskType
+        finishButton.isHidden = contentType == .failed || contentType == .done
+    }
+    
+    
+    @IBAction func onTapTaskButton(_ sender: Any) {
+        didTapTaskButton?()
     }
 }

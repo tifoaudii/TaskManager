@@ -9,38 +9,58 @@ import UIKit
 
 struct PresentableTask {
     
-    private let task: Task
+    private let title: String?
+    private let type: String?
+    private let deadline: Date?
+    private let color: NSObject?
     
-    init(task: Task) {
-        self.task = task
+    let selection: () -> Void
+    
+    init(
+        title: String?,
+        type: String?,
+        deadline: Date?,
+        color: NSObject?,
+        selection: @escaping () -> Void
+    ) {
+        self.title = title
+        self.type = type
+        self.deadline = deadline
+        self.color = color
+        self.selection = selection
     }
-    
+
     var taskType: String {
-        task.type ?? ""
+        type ?? ""
     }
     
     var taskTitle: String {
-        task.title ?? ""
+        title ?? ""
     }
     
     var taskDeadlineDate: String {
-//        if let deadline = task.deadline, let deadlineDate = deadline.split(separator: ",").first {
-//            return String(deadlineDate)
-//        }
-//
-        return ""
+        guard let date = deadline else {
+            return ""
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        return dateFormatter.string(from: date)
     }
     
     var taskDeadlineTime: String {
-//        if let deadline = task.deadline, let deadlineTime = deadline.split(separator: ",").last {
-//            return String(deadlineTime)
-//        }
-//        
-        return ""
+        guard let date = deadline else {
+            return ""
+        }
+        
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        return dateFormatter.string(from: date)
     }
     
     var taskColor: UIColor {
-        if let transformableColor = task.color, let color = transformableColor as? UIColor {
+        if let transformableColor = color, let color = transformableColor as? UIColor {
             return color
         }
         

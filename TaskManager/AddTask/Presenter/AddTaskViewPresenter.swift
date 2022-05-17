@@ -9,6 +9,7 @@ import Foundation
 
 protocol AddTaskViewPresenter {
     func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date)
+    func getFormattedDate(from date: Date) -> String
 }
 
 final class AddTaskViewDefaultPresenter: AddTaskViewPresenter {
@@ -29,5 +30,11 @@ final class AddTaskViewDefaultPresenter: AddTaskViewPresenter {
         newTask.type = type.rawValue
         coreDataStack.save()
         didAddNewTask?()
+    }
+    
+    func getFormattedDate(from date: Date) -> String {
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyy, HH:mm"
+        return dateFormatter.string(from: date)
     }
 }

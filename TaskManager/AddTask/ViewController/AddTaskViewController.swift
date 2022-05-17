@@ -46,11 +46,7 @@ final class AddTaskViewController: UIViewController {
     }
     
     @objc private func didSelectDate(_ sender: UIDatePicker) {
-        let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyy, HH:mm"
-        
-        let selectedDate: String = dateFormatter.string(from: sender.date)
-        deadlineTaskField.text = selectedDate
+        deadlineTaskField.text = presenter.getFormattedDate(from: sender.date)
     }
     
     @IBAction func onTapSaveButton(_ sender: Any) {

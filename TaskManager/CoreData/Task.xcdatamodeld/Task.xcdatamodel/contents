@@ -3,7 +3,7 @@
     <entity name="Task" representedClassName="Task" syncable="YES">
         <attribute name="color" optional="YES" attributeType="Transformable" valueTransformerName="ColorAttributeTransformer" customClassName="UIColor"/>
         <attribute name="deadline" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="isCompleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isCompleted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
     </entity>

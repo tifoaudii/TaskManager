@@ -48,11 +48,11 @@ final class TaskViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "TaskCell", bundle: .main), forCellReuseIdentifier: TaskCell.identifier)
-        fetchTasks()
+        fetchTasks(for: .today)
     }
     
-    private func fetchTasks() {
-        presenter.fetchTodayTask { [weak self] tasks in
+    private func fetchTasks(for contentType: TaskContentType) {
+        presenter.fetchTask(for: contentType) { [weak self] tasks in
             self?.tasks = tasks
             self?.tableView.reloadData()
         }
@@ -68,13 +68,18 @@ final class TaskViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         let task = tasks[indexPath.row]
-        cell.configureData(task: task)
+        let contentType = presenter.contentType
+        cell.configureData(task: task, for: contentType)
+        cell.didTapTaskButton = { [weak self] in
+            task.selection()
+            self?.fetchTasks(for: contentType)
+        }
+        
         return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffset = scrollView.contentOffset.y - lastContentOffset
-        
         
         if contentOffset > 0 && scrollView.contentOffset.y > 0 {
             if titleTopConstraint.constant > -80 {
@@ -100,12 +105,16 @@ final class TaskViewController: UIViewController, UITableViewDelegate, UITableVi
         todayButton.setTitleColor(.white, for: .normal)
         setInActive(for: upcomingButton, doneButton, failedButton)
         moveFilterIndicatorView(to: 0)
+        presenter.updateContentType(with: .today)
+        fetchTasks(for: .today)
     }
     
     @IBAction func onTapUpcomingButton(_ sender: Any) {
         upcomingButton.setTitleColor(.white, for: .normal)
         setInActive(for: todayButton, doneButton, failedButton)
         moveFilterIndicatorView(to: 1)
+        presenter.updateContentType(with: .upcoming)
+        fetchTasks(for: .upcoming)
     }
     
     
@@ -113,17 +122,21 @@ final class TaskViewController: UIViewController, UITableViewDelegate, UITableVi
         doneButton.setTitleColor(.white, for: .normal)
         setInActive(for: upcomingButton, todayButton, failedButton)
         moveFilterIndicatorView(to: 2)
+        presenter.updateContentType(with: .done)
+        fetchTasks(for: .done)
     }
     
     @IBAction func onTapFailedButton(_ sender: Any) {
         failedButton.setTitleColor(.white, for: .normal)
         setInActive(for: upcomingButton, doneButton, todayButton)
         moveFilterIndicatorView(to: 3)
+        presenter.updateContentType(with: .failed)
+        fetchTasks(for: .failed)
     }
     
     @IBAction func onTapAddTaskButton(_ sender: Any) {
         navigationDelegate.displayAddTaskView(from: self) { [weak self] in
-            self?.fetchTasks()
+            self?.fetchTasks(for: .today)
         }
     }
     

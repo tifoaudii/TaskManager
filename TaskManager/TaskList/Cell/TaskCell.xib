@@ -114,6 +114,9 @@
                                 <state key="normal" image="circle" catalog="system">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="onTapTaskButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sfZ-cn-rQ9"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
@@ -142,6 +145,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="cardView" destination="God-bD-vPD" id="Mgw-eF-7fU"/>
+                <outlet property="finishButton" destination="7ub-3B-EJV" id="zBN-rz-ifR"/>
                 <outlet property="taskDeadlineDateLabel" destination="7sW-Ng-uPL" id="i3u-TL-kEP"/>
                 <outlet property="taskDeadlineTimeLabel" destination="qFZ-I7-Niz" id="cMp-SS-cME"/>
                 <outlet property="taskTitleLabel" destination="2kE-wg-nsf" id="stb-Fd-Yeg"/>
