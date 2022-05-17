@@ -2,7 +2,8 @@
 An iOS application that created to help user manage their daily tasks.
 
 ## Architecture
-TBC
+<img src="TaskManagerArchitecture.png" />
+Monolith clean architecture
 
 ## Result
 <div style="display:flex;flex-direction:row">
