@@ -8,7 +8,7 @@
 import Foundation
 
 protocol AddTaskViewPresenter {
-    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date)
+    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date) -> Task
     func getFormattedDate(from date: Date) -> String
 }
 
@@ -22,7 +22,8 @@ final class AddTaskViewDefaultPresenter: AddTaskViewPresenter {
         self.coreDataStack = coreDataStack
     }
     
-    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date) {
+    @discardableResult
+    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date) -> Task {
         let newTask = Task(context: coreDataStack.viewContext)
         newTask.color = color.color
         newTask.deadline = deadline
@@ -30,6 +31,7 @@ final class AddTaskViewDefaultPresenter: AddTaskViewPresenter {
         newTask.type = type.rawValue
         coreDataStack.save()
         didAddNewTask?()
+        return newTask
     }
     
     func getFormattedDate(from date: Date) -> String {
