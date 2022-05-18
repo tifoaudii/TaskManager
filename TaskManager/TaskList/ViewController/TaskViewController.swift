@@ -7,6 +7,13 @@
 
 import UIKit
 
+protocol TaskViewPresenter {
+    var contentType: TaskContentType { get }
+    
+    func fetchTask(for contentType: TaskContentType, completion: @escaping ([PresentableTask]) -> Void)
+    func updateContentType(with contentType: TaskContentType)
+}
+
 protocol TaskViewControllerNavigationDelegate {
     func displayAddTaskView(from viewController: UIViewController, didAddNewTask: @escaping (() -> Void))
 }

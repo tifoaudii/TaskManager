@@ -7,31 +7,23 @@
 
 import Foundation
 
-protocol AddTaskViewPresenter {
-    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date) -> Task
-    func getFormattedDate(from date: Date) -> String
+protocol AddTaskViewDataStore {
+    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date)
 }
 
 final class AddTaskViewDefaultPresenter: AddTaskViewPresenter {
     
-    private let coreDataStack: CoreDataStack
+    private let dataStore: AddTaskViewDataStore
     
     var didAddNewTask: (() -> Void)?
     
-    init(coreDataStack: CoreDataStack) {
-        self.coreDataStack = coreDataStack
+    init(dataStore: AddTaskViewDataStore) {
+        self.dataStore = dataStore
     }
     
-    @discardableResult
-    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date) -> Task {
-        let newTask = Task(context: coreDataStack.viewContext)
-        newTask.color = color.color
-        newTask.deadline = deadline
-        newTask.title = title
-        newTask.type = type.rawValue
-        coreDataStack.save()
+    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date) {
+        dataStore.addNewTask(title: title, type: type, color: color, deadline: deadline)
         didAddNewTask?()
-        return newTask
     }
     
     func getFormattedDate(from date: Date) -> String {

@@ -7,14 +7,20 @@
 
 import UIKit
 
+protocol AddTaskViewPresenter {
+    func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date)
+    func getFormattedDate(from date: Date) -> String
+}
+
 final class AddTaskViewController: UIViewController {
 
     @IBOutlet weak var colorStackView: TaskColorStackView!
     @IBOutlet weak var deadlineTaskField: UITextField!
     @IBOutlet weak var titleTaskField: UITextField!
     @IBOutlet weak var taskTypeStackView: TaskTypeStackView!
+    @IBOutlet weak var saveButton: UIButton!
     
-    private lazy var datePicker: UIDatePicker = {
+    lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.minimumDate = Date()
         datePicker.preferredDatePickerStyle = .inline
@@ -45,7 +51,7 @@ final class AddTaskViewController: UIViewController {
         view.endEditing(true)
     }
     
-    @objc private func didSelectDate(_ sender: UIDatePicker) {
+    @objc func didSelectDate(_ sender: UIDatePicker) {
         deadlineTaskField.text = presenter.getFormattedDate(from: sender.date)
     }
     

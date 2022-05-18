@@ -33,7 +33,7 @@ class AddTaskPresenterTest: XCTestCase {
             callbackCalled = true
         }
         let date = Date()
-        sut.addNewTask(title: "Test Task", type: .basic, color: .blue, deadline: date)
+        _ = sut.addNewTask(title: "Test Task", type: .basic, color: .blue, deadline: date)
         
         XCTAssertTrue(callbackCalled)
     }
@@ -49,4 +49,6 @@ class AddTaskPresenterTest: XCTestCase {
         
         XCTAssertEqual(dateString, dateFormatter.string(from: date))
     }
+    
+    
 }

@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="colorStackView" destination="YzW-bZ-amF" id="P7B-kA-qGB"/>
                 <outlet property="deadlineTaskField" destination="hnC-Qe-jtm" id="KoY-ZB-d7K"/>
+                <outlet property="saveButton" destination="sJK-dI-0wm" id="OH3-sS-Tnq"/>
                 <outlet property="taskTypeStackView" destination="KyN-it-TvG" id="C1C-ee-8jj"/>
                 <outlet property="titleTaskField" destination="oIR-NR-gO4" id="DzP-7e-y0W"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

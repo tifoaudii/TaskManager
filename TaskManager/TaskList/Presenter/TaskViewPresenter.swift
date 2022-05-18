@@ -14,19 +14,20 @@ enum TaskContentType {
     case done
 }
 
-protocol TaskViewPresenter {
-    var contentType: TaskContentType { get }
-    
-    func fetchTask(for contentType: TaskContentType, completion: @escaping ([PresentableTask]) -> Void)
-    func updateContentType(with contentType: TaskContentType)
+protocol TaskViewDataStore {
+    func fetchTodayTask(completion: @escaping ([Task]) -> Void)
+    func fetchFailedTask(completion: @escaping ([Task]) -> Void)
+    func fetchUpcomingTask(completion: @escaping ([Task]) -> Void)
+    func fetchFinishedTask(completion: @escaping ([Task]) -> Void)
+    func finishTask(_ task: Task)
 }
 
 final class TaskViewDefaultPresenter: TaskViewPresenter {
     
-    private let coreDataStack: CoreDataStack
+    private let dataStore: TaskViewDataStore
     
-    init(coreDataStack: CoreDataStack) {
-        self.coreDataStack = coreDataStack
+    init(dataStore: TaskViewDataStore) {
+        self.dataStore = dataStore
     }
     
     var contentType: TaskContentType = .today
@@ -36,58 +37,43 @@ final class TaskViewDefaultPresenter: TaskViewPresenter {
     }
     
     func fetchTask(for contentType: TaskContentType, completion: @escaping ([PresentableTask]) -> Void) {
-        let request = Task.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: #keyPath(Task.deadline), ascending: true)
-        
         switch contentType {
         case .today:
-            let startDate = Date()
-            let endDate = Calendar.current.date(
-                bySettingHour: 23,
-                minute: 59,
-                second: 59,
-                of: startDate) ?? Date()
-            
-            let predicate = NSPredicate(format: "deadline >= %@ AND deadline < %@ AND isCompleted == %i", argumentArray: [startDate, endDate, 0])
-            request.predicate = predicate
-        case .upcoming:
-            let startDate = Calendar.current.startOfDay(
-                for: Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
-            )
-            
-            let predicate = NSPredicate(
-                format: "deadline >= %@ AND isCompleted == %i",
-                argumentArray: [startDate, 0]
-            )
-            
-            request.predicate = predicate
-        case .failed:
-            let predicate = NSPredicate(
-                format: "deadline < %@ AND isCompleted == %i",
-                argumentArray: [Date(), 0]
-            )
-            
-            request.predicate = predicate
-        case .done:
-            let predicate = NSPredicate(format: "isCompleted == %i", argumentArray: [1])
-            request.predicate = predicate
-        }
-        
-        request.sortDescriptors = [sortDescriptor]
-        
-        do {
-            let tasks = try coreDataStack.viewContext.fetch(request)
-            completion(
-                tasks.map { task in
-                    PresentableTask(title: task.title, type: task.type, deadline: task.deadline, color: task.color) { [weak self] in
-                        task.isCompleted = true
-                        self?.coreDataStack.save()
-                    }
+            dataStore.fetchTodayTask { [weak self] tasks in
+                if let presentableTasks = self?.createPresentableTask(from: tasks) {
+                    completion(presentableTasks)
                 }
-            )
-        } catch {
-            print(error)
+            }
+        case .upcoming:
+            dataStore.fetchUpcomingTask { [weak self] tasks in
+                if let presentableTasks = self?.createPresentableTask(from: tasks) {
+                    completion(presentableTasks)
+                }
+            }
+        case .failed:
+            dataStore.fetchFailedTask { [weak self] tasks in
+                if let presentableTasks = self?.createPresentableTask(from: tasks) {
+                    completion(presentableTasks)
+                }
+            }
+        case .done:
+            dataStore.fetchFinishedTask { [weak self] tasks in
+                if let presentableTasks = self?.createPresentableTask(from: tasks) {
+                    completion(presentableTasks)
+                }
+            }
         }
     }
     
+    private func createPresentableTask(from tasks: [Task]) -> [PresentableTask] {
+        return tasks.map { task in
+            PresentableTask(
+                title: task.title,
+                type: task.type,
+                deadline: task.deadline,
+                color: task.color) { [weak self] in
+                    self?.dataStore.finishTask(task)
+                }
+        }
+    }
 }

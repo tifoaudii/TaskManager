@@ -21,13 +21,13 @@ final class ViewControllerFactory: UIFactory {
     }
     
     func createTaskViewController(navigationDelegate: TaskViewControllerNavigationDelegate) -> UIViewController {
-        let presenter = TaskViewDefaultPresenter(coreDataStack: coreDataStack)
+        let presenter = TaskViewDefaultPresenter(dataStore: coreDataStack)
         let taskViewController = TaskViewController(presenter: presenter, navigationDelegate: navigationDelegate)
         return taskViewController
     }
     
     func createAddTaskViewController(didAddNewTask: @escaping () -> Void) -> UIViewController {
-        let presenter = AddTaskViewDefaultPresenter(coreDataStack: coreDataStack)
+        let presenter = AddTaskViewDefaultPresenter(dataStore: coreDataStack)
         let addTaskViewController = AddTaskViewController(presenter: presenter)
         
         presenter.didAddNewTask = {

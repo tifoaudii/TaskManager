@@ -39,16 +39,6 @@
                ReferencedContainer = "container:TaskManager.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "83860C6028256BBC00B1090D"
-               BuildableName = "TaskManagerUITests.xctest"
-               BlueprintName = "TaskManagerUITests"
-               ReferencedContainer = "container:TaskManager.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
