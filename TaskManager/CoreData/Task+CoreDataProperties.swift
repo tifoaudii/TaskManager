@@ -27,3 +27,15 @@ extension Task {
 extension Task : Identifiable {
 
 }
+
+extension Task: TaskModelConvertible {
+    func asTaskModel() -> TaskModel {
+        TaskModel(
+            title: title ?? "",
+            type: type ?? "",
+            deadline: deadline ?? Date(),
+            color: color,
+            isCompleted: isCompleted
+        )
+    }
+}

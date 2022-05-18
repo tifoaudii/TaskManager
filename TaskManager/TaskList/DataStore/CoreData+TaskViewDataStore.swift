@@ -10,7 +10,7 @@ import CoreData
 
 extension CoreDataStack: TaskViewDataStore {
     
-    func fetchTodayTask(completion: @escaping ([Task]) -> Void) {
+    func fetchTodayTask(completion: @escaping ([TaskModel]) -> Void) {
         let request = Task.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: #keyPath(Task.deadline), ascending: true)
         
@@ -29,10 +29,10 @@ extension CoreDataStack: TaskViewDataStore {
             return
         }
         
-        completion(tasks)
+        completion(tasks.map { $0.asTaskModel()} )
     }
     
-    func fetchFailedTask(completion: @escaping ([Task]) -> Void) {
+    func fetchFailedTask(completion: @escaping ([TaskModel]) -> Void) {
         let request = Task.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: #keyPath(Task.deadline), ascending: true)
         
@@ -48,10 +48,10 @@ extension CoreDataStack: TaskViewDataStore {
             return
         }
         
-        completion(tasks)
+        completion(tasks.map { $0.asTaskModel()} )
     }
     
-    func fetchFinishedTask(completion: @escaping ([Task]) -> Void) {
+    func fetchFinishedTask(completion: @escaping ([TaskModel]) -> Void) {
         let request = Task.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: #keyPath(Task.deadline), ascending: true)
         let predicate = NSPredicate(format: "isCompleted == %i", argumentArray: [1])
@@ -62,10 +62,10 @@ extension CoreDataStack: TaskViewDataStore {
             return
         }
         
-        completion(tasks)
+        completion(tasks.map { $0.asTaskModel()} )
     }
     
-    func fetchUpcomingTask(completion: @escaping ([Task]) -> Void) {
+    func fetchUpcomingTask(completion: @escaping ([TaskModel]) -> Void) {
         let request = Task.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: #keyPath(Task.deadline), ascending: true)
         let startDate = Calendar.current.startOfDay(
@@ -84,10 +84,18 @@ extension CoreDataStack: TaskViewDataStore {
             return
         }
         
-        completion(tasks)
+        completion(tasks.map { $0.asTaskModel()} )
     }
     
-    func finishTask(_ task: Task) {
+    func finishTask(_ task: TaskModel) {
+        let request = Task.fetchRequest()
+        let predicate = NSPredicate(format: "title == %@", task.title)
+        request.predicate = predicate
+        
+        guard let task = try? viewContext.fetch(request).first else {
+            fatalError()
+        }
+        
         task.isCompleted = true
         save()
     }

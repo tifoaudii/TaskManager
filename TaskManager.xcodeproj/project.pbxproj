@@ -16,6 +16,7 @@
 		83253DC32833F042008B3AFF /* AddTaskPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83253DC22833F042008B3AFF /* AddTaskPresenterTest.swift */; };
 		833F0B40283524EA00BDB9FB /* CoreData+TaskViewDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F0B3F283524EA00BDB9FB /* CoreData+TaskViewDataStore.swift */; };
 		833F0B43283527EB00BDB9FB /* CoreData+AddTaskViewDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F0B42283527EB00BDB9FB /* CoreData+AddTaskViewDataStore.swift */; };
+		833F0B462835365300BDB9FB /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F0B452835365300BDB9FB /* TaskModel.swift */; };
 		8346F57F2828F594009BC983 /* TaskTypeStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346F57E2828F594009BC983 /* TaskTypeStackView.swift */; };
 		8346F5812828FD0E009BC983 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346F5802828FD0E009BC983 /* CoreDataStack.swift */; };
 		8346F5842828FF2C009BC983 /* Task.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8346F5822828FF2C009BC983 /* Task.xcdatamodeld */; };
@@ -66,6 +67,7 @@
 		83253DC22833F042008B3AFF /* AddTaskPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskPresenterTest.swift; sourceTree = "<group>"; };
 		833F0B3F283524EA00BDB9FB /* CoreData+TaskViewDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+TaskViewDataStore.swift"; sourceTree = "<group>"; };
 		833F0B42283527EB00BDB9FB /* CoreData+AddTaskViewDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+AddTaskViewDataStore.swift"; sourceTree = "<group>"; };
+		833F0B452835365300BDB9FB /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		8346F57E2828F594009BC983 /* TaskTypeStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTypeStackView.swift; sourceTree = "<group>"; };
 		8346F5802828FD0E009BC983 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		8346F5832828FF2C009BC983 /* Task.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Task.xcdatamodel; sourceTree = "<group>"; };
@@ -141,6 +143,14 @@
 				833F0B42283527EB00BDB9FB /* CoreData+AddTaskViewDataStore.swift */,
 			);
 			path = DataStore;
+			sourceTree = "<group>";
+		};
+		833F0B442835364500BDB9FB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				833F0B452835365300BDB9FB /* TaskModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		8346F59128291D5C009BC983 /* CoreData */ = {
@@ -262,6 +272,7 @@
 		83860C4328256BBA00B1090D /* TaskManager */ = {
 			isa = PBXGroup;
 			children = (
+				833F0B442835364500BDB9FB /* Model */,
 				8346F59528291DCA009BC983 /* AddTask */,
 				8346F59428291DB8009BC983 /* TaskList */,
 				8346F59328291D89009BC983 /* AppFlow */,
@@ -431,6 +442,7 @@
 				8346F59E28291E4E009BC983 /* TaskViewPresenter.swift in Sources */,
 				8346F57F2828F594009BC983 /* TaskTypeStackView.swift in Sources */,
 				8346F59028290F68009BC983 /* AppFlow.swift in Sources */,
+				833F0B462835365300BDB9FB /* TaskModel.swift in Sources */,
 				8306B5132826BDCF00E143F9 /* TaskColorStackView.swift in Sources */,
 				83253DBA28339D01008B3AFF /* Task+CoreDataProperties.swift in Sources */,
 				83860C7A28257AA400B1090D /* TaskCell.swift in Sources */,

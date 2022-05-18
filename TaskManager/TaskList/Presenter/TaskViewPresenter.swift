@@ -15,11 +15,11 @@ enum TaskContentType {
 }
 
 protocol TaskViewDataStore {
-    func fetchTodayTask(completion: @escaping ([Task]) -> Void)
-    func fetchFailedTask(completion: @escaping ([Task]) -> Void)
-    func fetchUpcomingTask(completion: @escaping ([Task]) -> Void)
-    func fetchFinishedTask(completion: @escaping ([Task]) -> Void)
-    func finishTask(_ task: Task)
+    func fetchTodayTask(completion: @escaping ([TaskModel]) -> Void)
+    func fetchFailedTask(completion: @escaping ([TaskModel]) -> Void)
+    func fetchUpcomingTask(completion: @escaping ([TaskModel]) -> Void)
+    func fetchFinishedTask(completion: @escaping ([TaskModel]) -> Void)
+    func finishTask(_ task: TaskModel)
 }
 
 final class TaskViewDefaultPresenter: TaskViewPresenter {
@@ -65,7 +65,7 @@ final class TaskViewDefaultPresenter: TaskViewPresenter {
         }
     }
     
-    private func createPresentableTask(from tasks: [Task]) -> [PresentableTask] {
+    private func createPresentableTask(from tasks: [TaskModel]) -> [PresentableTask] {
         return tasks.map { task in
             PresentableTask(
                 title: task.title,

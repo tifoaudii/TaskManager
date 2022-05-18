@@ -56,15 +56,13 @@ class AddTaskViewControllerTest: XCTestCase {
     
     // MARK: Helper
     
-    class AddTaskPresenterSpy: AddTaskViewPresenter {
+    private class AddTaskPresenterSpy: AddTaskViewPresenter {
         
         var addNewTaskCalled = false
         var getFormattedDateCalled = false
         
-        func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date) -> Task {
+        func addNewTask(title: String, type: TaskType, color: TaskColorType, deadline: Date) {
             addNewTaskCalled = true
-            let task = Task()
-            return task
         }
         
         func getFormattedDate(from date: Date) -> String {
