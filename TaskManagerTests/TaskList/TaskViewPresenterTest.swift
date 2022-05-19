@@ -30,6 +30,36 @@ class TaskViewPresenterTest: XCTestCase {
         XCTAssertTrue(dataStore.fetchTodayTaskCalled)
     }
     
+    func test_whenContentTypeIsUpcomingTask_shouldFetchTodayTask() {
+        let dataStore = TaskViewDataStoreSpy()
+        let sut = TaskViewDefaultPresenter(dataStore: dataStore)
+        let contentType = TaskContentType.upcoming
+        
+        sut.updateContentType(with: contentType)
+        sut.fetchTask(for: contentType) { _ in }
+        XCTAssertTrue(dataStore.fetchUpcomingTaskCalled)
+    }
+    
+    func test_whenContentTypeIsFailedTask_shouldFetchTodayTask() {
+        let dataStore = TaskViewDataStoreSpy()
+        let sut = TaskViewDefaultPresenter(dataStore: dataStore)
+        let contentType = TaskContentType.failed
+        
+        sut.updateContentType(with: contentType)
+        sut.fetchTask(for: contentType) { _ in }
+        XCTAssertTrue(dataStore.fetchFailedTaskCalled)
+    }
+    
+    func test_whenContentTypeIsFinishedTask_shouldFetchTodayTask() {
+        let dataStore = TaskViewDataStoreSpy()
+        let sut = TaskViewDefaultPresenter(dataStore: dataStore)
+        let contentType = TaskContentType.done
+        
+        sut.updateContentType(with: contentType)
+        sut.fetchTask(for: contentType) { _ in }
+        XCTAssertTrue(dataStore.fetchFinishedTaskCalled)
+    }
+    
     // MARK: Helper
     private class TaskViewDataStoreSpy: TaskViewDataStore {
 
@@ -39,26 +69,26 @@ class TaskViewPresenterTest: XCTestCase {
         var fetchFinishedTaskCalled = false
         var finishTaskCalled = false
         
-        var todayTaskCompletion: (([Task]) -> Void)?
+        var todayTaskCompletion: (([TaskModel]) -> Void)?
         
-        func fetchTodayTask(completion: @escaping ([Task]) -> Void) {
+        func fetchTodayTask(completion: @escaping ([TaskModel]) -> Void) {
             fetchTodayTaskCalled = true
             todayTaskCompletion = completion
         }
         
-        func fetchFailedTask(completion: @escaping ([Task]) -> Void) {
+        func fetchFailedTask(completion: @escaping ([TaskModel]) -> Void) {
             fetchFailedTaskCalled = true
         }
         
-        func fetchUpcomingTask(completion: @escaping ([Task]) -> Void) {
+        func fetchUpcomingTask(completion: @escaping ([TaskModel]) -> Void) {
             fetchUpcomingTaskCalled = true
         }
         
-        func fetchFinishedTask(completion: @escaping ([Task]) -> Void) {
+        func fetchFinishedTask(completion: @escaping ([TaskModel]) -> Void) {
             fetchFinishedTaskCalled = true
         }
         
-        func finishTask(_ task: Task) {
+        func finishTask(_ task: TaskModel) {
             finishTaskCalled = true
         }
     }
