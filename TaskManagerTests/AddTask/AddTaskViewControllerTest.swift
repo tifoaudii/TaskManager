@@ -52,6 +52,12 @@ class AddTaskViewControllerTest: XCTestCase {
         sut.onTapSaveButton(sut.saveButton!)
         
         XCTAssertFalse(presenter.addNewTaskCalled)
+        
+        sut.titleTaskField.text = "some title"
+        sut.deadlineTaskField.text = ""
+        sut.onTapSaveButton(sut.saveButton!)
+        
+        XCTAssertFalse(presenter.addNewTaskCalled)
     }
     
     // MARK: Helper
