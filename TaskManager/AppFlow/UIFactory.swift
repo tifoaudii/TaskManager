@@ -8,26 +8,20 @@
 import UIKit
 
 protocol UIFactory {
-    func createTaskViewController(navigationDelegate: TaskViewControllerNavigationDelegate) -> UIViewController
-    func createAddTaskViewController(didAddNewTask: @escaping () -> Void) -> UIViewController
+    func createTaskViewController(dataStore: TaskViewDataStore, navigationDelegate: TaskViewControllerNavigationDelegate) -> UIViewController
+    func createAddTaskViewController(dataStore: AddTaskViewDataStore, didAddNewTask: @escaping () -> Void) -> UIViewController
 }
 
 final class ViewControllerFactory: UIFactory {
     
-    private let coreDataStack: CoreDataStack
-    
-    init(coreDataStack: CoreDataStack) {
-        self.coreDataStack = coreDataStack
-    }
-    
-    func createTaskViewController(navigationDelegate: TaskViewControllerNavigationDelegate) -> UIViewController {
-        let presenter = TaskViewDefaultPresenter(dataStore: coreDataStack)
+    func createTaskViewController(dataStore: TaskViewDataStore, navigationDelegate: TaskViewControllerNavigationDelegate) -> UIViewController {
+        let presenter = TaskViewDefaultPresenter(dataStore: dataStore)
         let taskViewController = TaskViewController(presenter: presenter, navigationDelegate: navigationDelegate)
         return taskViewController
     }
     
-    func createAddTaskViewController(didAddNewTask: @escaping () -> Void) -> UIViewController {
-        let presenter = AddTaskViewDefaultPresenter(dataStore: coreDataStack)
+    func createAddTaskViewController(dataStore: AddTaskViewDataStore, didAddNewTask: @escaping () -> Void) -> UIViewController {
+        let presenter = AddTaskViewDefaultPresenter(dataStore: dataStore)
         let addTaskViewController = AddTaskViewController(presenter: presenter)
         
         presenter.didAddNewTask = {

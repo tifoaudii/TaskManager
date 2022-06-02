@@ -16,19 +16,21 @@ final class AppRouter: Router, TaskViewControllerNavigationDelegate {
     
     private let navigationController: UINavigationController
     private let factory: UIFactory
+    private let coreDataStack: CoreDataStack
     
-    init(navigationController: UINavigationController, factory: UIFactory) {
+    init(navigationController: UINavigationController, factory: UIFactory, coreDataStack: CoreDataStack) {
         self.navigationController = navigationController
         self.factory = factory
+        self.coreDataStack = coreDataStack
     }
     
     func pushToTaskView() {
-        let taskViewController = factory.createTaskViewController(navigationDelegate: self)
+        let taskViewController = factory.createTaskViewController(dataStore: coreDataStack, navigationDelegate: self)
         navigationController.pushViewController(taskViewController, animated: true)
     }
     
     func presentAddTaskView(from viewController: UIViewController, didAddNewTask: @escaping (() -> Void)) {
-        let addTaskViewController = factory.createAddTaskViewController(didAddNewTask: didAddNewTask)
+        let addTaskViewController = factory.createAddTaskViewController(dataStore: coreDataStack, didAddNewTask: didAddNewTask)
         viewController.present(addTaskViewController, animated: true, completion: nil)
     }
     

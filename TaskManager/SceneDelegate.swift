@@ -21,8 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
-        let factory = ViewControllerFactory(coreDataStack: CoreDataStack(inMemory: false))
-        let router = AppRouter(navigationController: navigationController, factory: factory)
+        let factory = ViewControllerFactory()
+        let router = AppRouter(navigationController: navigationController, factory: factory, coreDataStack: CoreDataStack(inMemory: false))
         let flow = AppFlow(router: router)
         flow.start()
     }
